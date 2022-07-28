@@ -36,3 +36,17 @@ sleep 15
 
 sudo chmod -R 777 ./run ./logs ./data ./custom-cont-init.d ./custom-*
 docker restart wifi
+
+ethip=$(ifconfig eth0 | grep 'inet ' | perl -pe 's|.*inet (.*?)\s+.*|$1|')
+
+echo "
+netsh interface portproxy add v4tov4 listenport=3478 listenaddress=0.0.0.0 connectport=3478 connectaddress=$ethip
+netsh interface portproxy add v4tov4 listenport=10001 listenaddress=0.0.0.0 connectport=10001 connectaddress=$ethip
+netsh interface portproxy add v4tov4 listenport=8080 listenaddress=0.0.0.0 connectport=8080 connectaddress=$ethip
+netsh interface portproxy add v4tov4 listenport=8443 listenaddress=0.0.0.0 connectport=8443 connectaddress=$ethip
+netsh interface portproxy add v4tov4 listenport=1900 listenaddress=0.0.0.0 connectport=1900 connectaddress=$ethip
+netsh interface portproxy add v4tov4 listenport=8843 listenaddress=0.0.0.0 connectport=8843 connectaddress=$ethip
+netsh interface portproxy add v4tov4 listenport=8880 listenaddress=0.0.0.0 connectport=8880 connectaddress=$ethip
+netsh interface portproxy add v4tov4 listenport=6789 listenaddress=0.0.0.0 connectport=6789 connectaddress=$ethip
+netsh interface portproxy add v4tov4 listenport=5514 listenaddress=0.0.0.0 connectport=5514 connectaddress=$ethip
+"
